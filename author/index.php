@@ -9,12 +9,17 @@ $db->connect();
 
 $sprefix = $db->getSessionPrefix();
 
+if(!isset($_SESSION[$sprefix.'Username'])){
+  header('Location: ../registration/submission/');
+  die();
+}
+
 $strSQL = "SELECT * FROM t5iw_useraccount a INNER JOIN t5iw_userinformation b on a.username = b.username WHERE a.username = ?";
 $resultInfo = $db->select($strSQL, array($_SESSION[$sprefix.'Username']));
 if($resultInfo){
   $rowinfo = $resultInfo->fetch();
 }else{
-  header('../registration/');
+  header('Location: ../registration/submission/');
   die();
 }
 ?>
@@ -125,7 +130,7 @@ if($resultInfo){
                                   <h2 class="text-left" style="font-weight: 500; line-height: 0.8;">Your submitted abstract</h2>
                               </div>
                               <div class="card-block" style="padding: 0px 24px ;">
-                                <a href="#" style="color: rgb(89, 89, 89);"><i class="fa fa-home"></i> Home</a>&nbsp;&nbsp;/&nbsp;&nbsp;Submitted abstract
+                                <a href="./" ><i class="fa fa-home"></i> Home</a>&nbsp;&nbsp;/&nbsp;&nbsp;Submitted abstract
                               </div>
 
 
@@ -192,9 +197,17 @@ if($resultInfo){
                                               <td class="text-center" style="vertical-align: top;">
                                                   <div class="btn-group">
                                                       <a href="submission_info.php?sid=<?php echo $value['submission_id'];?>" class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="View submission"><i class="fa fa-search"></i></a>
-                                                      <a href="submission_info.php?sid=<?php echo $value['submission_id'];?>" class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Edit your submission"><i class="fa fa-wrench"></i></a>
-                                                      <a href="javascript:msg_confirm('You can not delete or withdraw after confirm. If you want to withdraw this submission, please contact with coordinator directly.','controller/confirm_submission.php?sid=<?php echo $value['submission_id'];?>')" class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Comfirm your submission"><i class="fa fa-check"></i></a>
-                                                      <a href="javascript:delete_confirm('controller/delete_submission.php?sid=<?php echo $value['submission_id'];?>')" class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Delete submission"><i class="fa fa-trash"></i></a>
+                                                      <?php
+                                                      if($value['sending_status']=='N'){
+                                                        ?>
+                                                        <a href="javascript:redirect('edit_submission.php?sid=<?php echo $value['submission_id'];?>')" class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Edit your submission"><i class="fa fa-wrench"></i></a>
+                                                        <a href="javascript:msg_confirm('You can not delete or withdraw after confirm. If you want to withdraw this submission, please contact with coordinator directly.','controller/confirm_submission.php?sid=<?php echo $value['submission_id'];?>')" class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Comfirm your submission"><i class="fa fa-check"></i></a>
+                                                        <a href="javascript:delete_confirm('controller/delete_submission.php?sid=<?php echo $value['submission_id'];?>')" class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Delete submission"><i class="fa fa-trash"></i></a>
+                                                        <?php
+                                                      }
+                                                      ?>
+
+
                                                   </div>
                                               </td>
                                           </tr>
@@ -204,7 +217,8 @@ if($resultInfo){
                                       }
 
                                       ?>
-
+                                    </tbody>
+                                  </table>
                               </div>
                             </div>
                           </div>
@@ -214,6 +228,20 @@ if($resultInfo){
 
                 </main>
 
+                <footer>
+                  <div class="row">
+                    <div class="col-sm-12 text-center">
+                      <p>
+                        The 11th Postgraduate Forum on Health Systems and Policy:
+Integrated Health System and Policy for Sustainable Development Goal
+                      </p>
+                      <p>
+                        Contat person: Ms.Anyawadee Limwachirachot
+E-mail: <span class="text-green">bags.anyawadee@gmail.com</span>
+                      </p>
+                    </div>
+                  </div>
+                </footer>
             </div>
             <!-- .app-layout-container -->
         </div>

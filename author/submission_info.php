@@ -9,12 +9,17 @@ $db->connect();
 
 $sprefix = $db->getSessionPrefix();
 
+if(!isset($_SESSION[$sprefix.'Username'])){
+  header('Location: ../registration/submission/');
+  die();
+}
+
 $strSQL = "SELECT * FROM t5iw_useraccount a INNER JOIN t5iw_userinformation b on a.username = b.username WHERE a.username = ?";
 $resultInfo = $db->select($strSQL, array($_SESSION[$sprefix.'Username']));
 if($resultInfo){
   $rowinfo = $resultInfo->fetch();
 }else{
-  header('../registration/');
+  header('Location: ../registration/submission/');
   die();
 }
 
@@ -59,7 +64,7 @@ $rowsubmission = $resultSubmission->fetch();
 
         <!-- Page JS Plugins CSS -->
         <link rel="stylesheet" href="../registration/assets/js/plugins/datatables/jquery.dataTables.min.css" />
-
+        <link rel="stylesheet" type="text/css" href="../ext-lib/sweetalert/dist/sweetalert.css">
         <!-- AppUI CSS stylesheets -->
         <link rel="stylesheet" id="css-font-awesome" href="../registration/assets/css/font-awesome.css" />
         <link rel="stylesheet" id="css-ionicons" href="../registration/assets/css/ionicons.css" />
@@ -191,63 +196,73 @@ $rowsubmission = $resultSubmission->fetch();
                                                 echo "N/A";
                                               }
                                                ?>
+
+                                               <?php
+                                               if($rowsubmission['sending_status']=='N'){
+                                                 ?>
+                                                 <div class="" style="padding-top: 20px;">
+                                                   <button type="button" name="button" class="btn btn-app-blue" onclick="javascript:redirect('edit_submission.php?sid=<?php echo $rowsubmission['submission_id'];?>')"><i class="fa fa-wrench"></i> Edit</button>
+                                                   <button type="button" name="button" class="btn btn-app-blue" onclick="javascript:msg_confirm('You can not delete or withdraw after confirm. If you want to withdraw this submission, please contact with coordinator directly.','controller/confirm_submission.php?sid=<?php echo $rowsubmission['submission_id'];?>')"><i class="fa fa-check"></i> Confirm this submission</button>
+                                                   <button type="button" name="button" class="btn btn-app-red" onclick="javascript:delete_confirm('controller/delete_submission.php?sid=<?php echo $rowsubmission['submission_id'];?>')"><i class="fa fa-trash"></i> Delete</button>
+                                                 </div>
+                                                 <?php
+                                               }
+                                               ?>
+
                                             </td>
                                             <td style="vertical-align: top;"><?php echo $rowinfo['prefix_id'].$rowinfo['fname']." ".$rowinfo['lname']; ?></td>
                                             <td class="hidden-xs" style="vertical-align: top;">
                                                 <em class="text-muted"><?php echo $rowsubmission['submit_date_time']; ?></em>
                                             </td>
                                         </tr>
-                                    </tbody>
-                                    <tbody>
-                                      <?php
-                                      $strSQL = "SELECT * FROM t5iw_transection a INNER JOIN t5iw_userinformation b on a.tr_by=b.username WHERE a.tr_status <> ? AND a.tr_submission_id = ?";
-                                      $resultTransection = $db->select($strSQL, array('99', $rowsubmission['submission_id']));
-                                      if($resultTransection){
-                                        $c = 1;
-                                        foreach ($resultTransection as $value) {
-                                          ?>
-                                          <tr>
-                                              <td class="text-center"></td>
-                                              <td class="font-400 text-blue">
-                                                <?php
-                                                if($value['tr_status']=='1'){
-                                                  echo "New submission";
-                                                }else if($value['tr_status']=='2'){
-                                                  echo "Assign reviewer";
-                                                }else if($value['tr_status']=='3'){
-                                                  echo "Reply with comment";
-                                                }else if($value['tr_status']=='4'){
-                                                  echo "Finallize before acception";
-                                                }else if($value['tr_status']=='5'){
-                                                  echo "Accept";
-                                                }
-                                                ?><br>
-                                                <?php
-                                                if($value['tr_status']=='1'){
-                                                  ?>
-                                                  <small>[ View submission ]</small>
+                                        <?php
+                                        $strSQL = "SELECT * FROM t5iw_transection a INNER JOIN t5iw_userinformation b on a.tr_by=b.username WHERE a.tr_status <> ? AND a.tr_submission_id = ?";
+                                        $resultTransection = $db->select($strSQL, array('99', $rowsubmission['submission_id']));
+                                        if($resultTransection){
+                                          $c = 1;
+                                          foreach ($resultTransection as $value) {
+                                            ?>
+                                            <tr>
+                                                <td class="text-center"></td>
+                                                <td class="font-400 text-blue">
                                                   <?php
-                                                }
-                                                ?>
-                                              </td>
-                                              <td>
-                                                  <small>
-                                                    <?php echo $value['prefix_id'].$value['fname']." ".$value['lname'];; ?>
-                                                  </small>
-                                              </td>
-                                              <td class="hidden-xs">
-                                                  <small class="text-muted">
-                                                    <?php echo $value['tr_date']; ?>
-                                                  </small>
-                                              </td>
-                                          </tr>
-                                          <?php
+                                                  if($value['tr_status']=='1'){
+                                                    echo "New abstract submission";
+                                                  }else if($value['tr_status']=='2'){
+                                                    echo "Assign reviewer";
+                                                  }else if($value['tr_status']=='3'){
+                                                    echo "Reply with comment";
+                                                  }else if($value['tr_status']=='4'){
+                                                    echo "Finallize before acception";
+                                                  }else if($value['tr_status']=='5'){
+                                                    echo "Accept";
+                                                  }
+                                                  ?><br>
+                                                  <?php
+                                                  if($value['tr_status']=='1'){
+                                                    ?>
+                                                    <small><a href="<?php echo $rowsubmission['filename'];?>">[ Download abstract file ]</a></small>
+                                                    <?php
+                                                  }
+                                                  ?>
+                                                </td>
+                                                <td>
+                                                    <small>
+                                                      <?php echo $value['prefix_id'].$value['fname']." ".$value['lname'];; ?>
+                                                    </small>
+                                                </td>
+                                                <td class="hidden-xs">
+                                                    <small class="text-muted">
+                                                      <?php echo $value['tr_date']; ?>
+                                                    </small>
+                                                </td>
+                                            </tr>
+                                            <?php
+                                          }
                                         }
-                                      }
-                                      ?>
+                                        ?>
+                                    </tbody>
 
-
-                                      </tbody>
                                     </table>
                               </div>
                             </div>
@@ -257,7 +272,20 @@ $rowsubmission = $resultSubmission->fetch();
                     <!-- End Page Content -->
 
                 </main>
-
+                <footer>
+                  <div class="row">
+                    <div class="col-sm-12 text-center">
+                      <p>
+                        The 11th Postgraduate Forum on Health Systems and Policy:
+Integrated Health System and Policy for Sustainable Development Goal
+                      </p>
+                      <p>
+                        Contat person: Ms.Anyawadee Limwachirachot
+E-mail: <span class="text-green">bags.anyawadee@gmail.com</span>
+                      </p>
+                    </div>
+                  </div>
+                </footer>
             </div>
             <!-- .app-layout-container -->
         </div>
@@ -279,6 +307,7 @@ $rowsubmission = $resultSubmission->fetch();
 
         <!-- Page JS Code -->
         <!-- <script src="../registration/assets/js/pages/base_tables_datatables.js"></script> -->
+        <script src="../ext-lib/sweetalert/dist/sweetalert.min.js"></script>
         <script src="../registration/assets/js/pages/submission/script.js"></script>
         <script>
             $(function()

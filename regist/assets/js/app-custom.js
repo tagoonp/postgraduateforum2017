@@ -45,3 +45,7 @@ function msg_confirm(msg, url){
 	  window.location = url;
 	});
 }
+
+function redirect(url){
+	window.location = url;
+}
