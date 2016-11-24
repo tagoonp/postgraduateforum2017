@@ -12,3 +12,9 @@ html, body{
 hr.style4 {
 	border-top: 1px dotted #8c8b8b;
 }
+
+
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+    color: #fff;
+    background-color: transparent;
+}

@@ -76,11 +76,139 @@ var BaseFormWizard = function() {
 			rules: {
 				'val-terms': {
 						required: true
+				},
+				'pre_type': {
+						required: true
+				},
+				'reg_type': {
+						required: true
+				},
+				'prefix': {
+						required: true
+				},
+				'fname': {
+						required: true
+				},
+				'lname': {
+						required: true
+				},
+				'university': {
+						required: true
+				},
+				'status': {
+						required: true
+				},
+				'status_other': {
+						required: true
+				},
+				'address': {
+						required: true
+				},
+				'country': {
+						required: true
+				},
+				'phone': {
+						required: true
+				},
+				'email': {
+						required: true,
+						email: true
+				},
+				'accommodation': {
+						required: true
+				},
+				'accommodation_other': {
+						required: true
+				},
+				'arr_date': {
+						required: true
+				},
+				'arr_time1': {
+						required: true
+				},
+				'arr_time2': {
+						required: true
+				},
+				'dept_date': {
+						required: true
+				},
+				'dept_time1': {
+						required: true
+				},
+				'dept_time2': {
+						required: true
+				},
+				'travel_type': {
+						required: true
 				}
 			},
 			messages: {
 
-				'val-terms': 'You must agree to the service terms!'
+				'val-terms': 'You must agree to the service terms!',
+				'pre_type': {
+						required: 'Please choose participation type...'
+				},
+				'reg_type': {
+						required: 'Please choose registration type...'
+				},
+				'prefix': {
+						required: 'Please choose your prefix...'
+				},
+				'fname': {
+						required: 'Please enter your first name...'
+				},
+				'lname': {
+						required: 'Please enter your surname...'
+				},
+				'university': {
+						required: "Please enter usiversity or insitute..."
+				},
+				'status': {
+						required: 'Please choose status...'
+				},
+				'status_other': {
+						required: 'Please enter other status info...'
+				},
+				'address': {
+						required: 'Please enter your address...'
+				},
+				'country': {
+						required: 'Please choose your country...'
+				},
+				'phone': {
+						required: 'Please enter your phone number...'
+				},
+				'email': {
+						required: 'Please enter your e-mail address...',
+						email: 'Please enter valid e-mail address...'
+				},
+				'accommodation': {
+						required: 'Please choose your arranged accommodation...'
+				},
+				'accommodation_other': {
+						required: 'Please enter accommodation name...'
+				},
+				'arr_date': {
+						required: 'Please choose arraival date...'
+				},
+				'arr_time1': {
+						required: 'Choose one...'
+				},
+				'arr_time2': {
+						required: 'Choose one...'
+				},
+				'dept_date': {
+						required: 'Please choose depart date...'
+				},
+				'dept_time1': {
+						required: 'Choose one...'
+				},
+				'dept_time2': {
+						required: 'Choose one...'
+				},
+				'travel_type': {
+						required: 'Please choose travel type...'
+				}
 			}
 		});
 
