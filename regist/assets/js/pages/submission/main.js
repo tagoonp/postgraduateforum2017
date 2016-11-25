@@ -55,10 +55,11 @@ $(function(){
   });
 
   $('.js-validation-bootstrap').submit(function(){
-    if($('#wcount').val()!='0'){
+    if(($('#wcount').val()!='0') && ($('#wcount').val()<='250')){
       $("#a").css('border', 'none');
-      alert('Submittd');
-      return false;
+      // alert('Submittd');
+      // return false;
+      return true;
     }else{
       $("#a").css('border', 'solid');
       $("#a").css('border-color', 'red');

@@ -111,7 +111,7 @@ if($resultSelect){
                   <!-- <h4>Your submitted abstract</h4> -->
               </div>
               <div class="card-block">
-                <form class="js-validation-bootstrap form-horizontal" action="controller/insert-submission.php" method="post" >
+                <form class="js-validation-bootstrap form-horizontal" action="../controller/insert-submission.php" method="post" >
                   <div class="form-group">
                     <label class="col-md-3 control-label" for="example-select2">Presentation type <span class="text-red">**</span></label>
                     <div class="col-md-8">
@@ -186,7 +186,9 @@ if($resultSelect){
                   </div>
 
                   <div class="form-group">
-                    <label class="col-md-3 control-label" for="val-suggestions">Abstract <span class="text-red">**</span></label>
+                    <label class="col-md-3 control-label" for="val-suggestions">Abstract <span class="text-red">**</span><br>
+                      <a href="#" data-toggle="modal"  data-target="#modal-normal2">- Read abstract format suggestion -</a>
+                    </label>
                     <div class="col-md-8">
                       <div class="" id="a">
                         <textarea class="form-control" id="txt-abstract" name="txt-abstract" rows="20" placeholder="Enter your abstract..."></textarea>
@@ -198,6 +200,12 @@ if($resultSelect){
                     <label class="col-md-3 control-label" for="example-select2">Words count <span class="text-red">**</span></label>
                     <div class="col-md-8">
                       <input class="form-control" type="text" id="wcount" name="wcount" placeholder="Enter presenter's full name ..." value="0" readonly />
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="col-md-7 col-md-offset-4">
+
                     </div>
                   </div>
 
@@ -215,7 +223,7 @@ if($resultSelect){
           </div>
         </div>
 
-        <div class="row" style="padding-top: 30px;">
+        <div class="row" style="padding-top: 30px; padding-bottom: 30px;">
           <div class="col-sm-12 text-center">
             The 11th Postgraduate Forum on Health Systems and Policy:
   Integrated Health System and Policy for Sustainable Development Goal
@@ -280,7 +288,9 @@ if($resultSelect){
                           <div class="col-md-7">
                               <textarea class="form-control" id="val-suggestions" name="val-suggestions" rows="3" placeholder="Share your ideas with us.."></textarea>
                           </div>
+
                       </div>
+
 
                   </div>
                   <div class="modal-footer">
@@ -288,6 +298,46 @@ if($resultSelect){
                       <button class="btn btn-sm btn-app" type="submit" ><i class="ion-checkmark"></i> Ok</button>
                   </div>
                 </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="modal-normal2" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="card-header bg-green bg-inverse">
+                    <h4>Abstract format suggestion</h4>
+                    <ul class="card-actions">
+                        <li>
+                            <button data-dismiss="modal" type="button"><i class="ion-close"></i></button>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-block">
+                  <p>
+                    <ul>
+                      <li>Abstracts	of	a	<span class="text-red" style="font-weight: 400;">maximum	250	words</span>	should	be	structured	as	follows:</li>
+                      <ul class="dashed">
+                        <li>&nbsp;&nbsp;Title,	in	brief	but	clearly	indicating	the	content	of	the	paper.	Abbreviations	may	not	be
+used	in	abstract	titles.</li>
+<li>&nbsp;&nbsp;Authors'	names	and	their	institutional	affiliations	in	separate	fields.	Name	of	presenter
+should	be	underlined.</li>
+<li>&nbsp;&nbsp;Objective(s)</li>
+<li>&nbsp;&nbsp;Methods,	containing	sufficient	detail	to	evaluate	their	appropriateness	and	novelty</li>
+<li>&nbsp;&nbsp;Results,	stated	in	sufficient	detail	to	support	conclusions.	It	is	not	satisfactory	to	state,
+“results	will	be	discussed”	or	“data	will	be	presented.”
+</li>
+<li>&nbsp;&nbsp;Conclusions	reached.</li>
+                      </ul>
+                      <li>Indent	each	paragraph	with	a	tab	space	before	beginning	the text.</li>
+                      <li>Do	not	use	underlining	or	capitalization	for	emphasis.</li>
+                      <li>Do	not	include	tables,	graphs	or	figures.</li>
+                    </ul>
+                  </p>
+                  <div class="text-center">
+                    <button  data-dismiss="modal" type="button" name="button" class="btn btn-app">Close</button>
+                  </div>
+                </div>
             </div>
         </div>
     </div>
@@ -317,14 +367,14 @@ if($resultSelect){
 
       CKEDITOR.replace( 'txt-abstract', {
         wordcount : {
-					showCharCount : true,
+					showCharCount : false,
 					showWordCount : true,
 
 					// Maximum allowed Word Count
-					maxWordCount: 300,
+					maxWordCount: 250,
 
 					// Maximum allowed Char Count
-					maxCharCount: 1000
+					// maxCharCount: 50000
 				},
 
         on: {

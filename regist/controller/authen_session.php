@@ -52,7 +52,7 @@ if($result){
 
   $row = $result->fetch();
 
-  $strSQL = "UPDATE t5iw_useraccount SET activate_status = 'Y' AND active_status = 'Y' WHERE username = ? AND sid = ?";
+  $strSQL = "UPDATE t5iw_useraccount SET activate_status = 'Y', active_status = 'Y' WHERE username = ? AND sid = ?";
   $resultUpdate = $db->update($strSQL, array($_SESSION[$sprefix.'Username'],  $_GET['sid']));
 
 

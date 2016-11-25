@@ -3,6 +3,7 @@ session_start();
 
 include "../../xplor-config.php";
 include "../../xplor-connect.php";
+include "../lib/dateTime-inter.php";
 
 $db = new database();
 $db->connect();
@@ -33,7 +34,7 @@ $sprefix = $db->getSessionPrefix();
 
     <!-- Page JS Plugins CSS -->
     <link rel="stylesheet" href="../assets/js/plugins/datatables/jquery.dataTables.min.css" />
-
+    <link rel="stylesheet" type="text/css" href="../lib/sweetalert/dist/sweetalert.css">
 
     <!-- AppUI CSS stylesheets -->
     <link rel="stylesheet" id="css-font-awesome" href="../assets/css/font-awesome.css" />
@@ -84,6 +85,17 @@ $sprefix = $db->getSessionPrefix();
                 <li><a href="#" style="color: #fff;">Contact</a></li> -->
 
               </ul>
+              <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown active">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><strong>Howdy</strong>, Mr.Tagoon Prappre <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="userinfo.php">User info.</a></li>
+                    <li><a href="changepassword.php">Change password</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="../signout.php">Sign out</a></li>
+                  </ul>
+                </li>
+              </ul>
             </div><!--/.nav-collapse -->
           </div><!--/.container-fluid -->
         </nav>
@@ -95,7 +107,7 @@ $sprefix = $db->getSessionPrefix();
         <!-- <hr class="style4"> -->
         <div class="row">
           <div class="col-sm-12">
-            <button type="button" name="button" class="btn btn-app-red" onclick="javascript:location='submission.php'"><i class="fa fa-plus"></i> Add new submission</button>
+            <button type="button" name="button" class="btn btn-app-red" onclick="javascript:redirect_addsubmission()"><i class="fa fa-plus"></i> Add new submission</button>
           </div>
         </div>
         <div class="row" style="padding-top: 20px;">
@@ -116,12 +128,12 @@ $sprefix = $db->getSessionPrefix();
                           <th>Title</th>
                           <th class="hidden-xs">Status</th>
                           <th class="hidden-xs w-20">Created</th>
-                          <th class="" style="width: 15%;">Actions</th>
+                          <th class="" style="width: 20%;">Actions</th>
                       </tr>
                   </thead>
                   <tbody>
                     <?php
-                    $strSQL = "SELECT * FROM t5iw_submission a INNER JOIN t5iw_fileupload b on a.submission_id = b.submission_id WHERE a.username = ? AND a.delete_status = ? ";
+                    $strSQL = "SELECT * FROM t5iw_submission a  WHERE a.username = ? AND a.delete_status = ? ";
                     $resultSubmission = $db->select($strSQL, array($_SESSION[$sprefix.'Username'], 'N'));
 
                     if($resultSubmission){
@@ -134,50 +146,36 @@ $sprefix = $db->getSessionPrefix();
                             <td class="font-500" style="vertical-align: top;"><a href="submission_info.php?sid=<?php echo $value['submission_id'];?>"><?php echo $value['title'];?></a></td>
                             <td class="hidden-xs" style="vertical-align: top;">
                               <?php
-                              $strSQL = "SELECT * FROM t5iw_transection a INNER JOIN t5iw_userinformation b on a.tr_by = b.username WHERE a.tr_submission_id = ? ORDER BY a.tr_id DESC LIMIT 0, 1";
-                              $resultLast = $db->select($strSQL, array($value['submission_id']));
-                              if($resultLast){
-                                $rowLast = $resultLast->fetch();
-                                switch ($rowLast['tr_status']) {
-                                  case '1':
-                                    echo "Submit new abstract";
-                                    break;
-                                  case '2':
-                                    echo "Assign reviewer";
-                                    break;
-                                  case '3':
-                                    echo "Reply with comment";
-                                    break;
-                                  case '4':
-                                    echo "Finallize before acception";
-                                    break;
-                                  case '5':
-                                    echo "Accept";
-                                    break;
-                                  default:
-                                    echo "N/A";
-                                    break;
-                                }
-                                echo "<br><strong>By</strong> ".$rowLast['prefix_id'].$rowLast['fname']." ".$rowLast['lname'];
+                              switch ($value['stage']) {
+                                case '1':
+                                  echo "Created";
+                                  break;
+                                case '2':
+                                  echo "Assign reviewer";
+                                  break;
+                                case '3':
+                                  echo "Reply with comment";
+                                  break;
+                                case '4':
+                                  echo "Finallize before acception";
+                                  break;
+                                case '5':
+                                  echo "Accept";
+                                  break;
+                                default:
+                                  echo "N/A";
+                                  break;
                               }
                               ?>
                             </td>
                             <td class="hidden-xs" style="vertical-align: top;">
-                              <?php echo $rowLast['tr_date']; ?>
+                              <?php echo dateConvert_1($value['submit_date_time']); ?>
                             </td>
                             <td class="text-center" style="vertical-align: top;">
                                 <div class="btn-group">
                                     <a href="submission_info.php?sid=<?php echo $value['submission_id'];?>" class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="View submission"><i class="fa fa-search"></i></a>
-                                    <?php
-                                    if($value['sending_status']=='N'){
-                                      ?>
-                                      <a href="javascript:redirect('edit_submission.php?sid=<?php echo $value['submission_id'];?>')" class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Edit your submission"><i class="fa fa-wrench"></i></a>
-                                      <a href="javascript:msg_confirm('You can not delete or withdraw after confirm. If you want to withdraw this submission, please contact with coordinator directly.','controller/confirm_submission.php?sid=<?php echo $value['submission_id'];?>')" class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Comfirm your submission"><i class="fa fa-check"></i></a>
-                                      <a href="javascript:delete_confirm('controller/delete_submission.php?sid=<?php echo $value['submission_id'];?>')" class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Delete submission"><i class="fa fa-trash"></i></a>
-                                      <?php
-                                    }
-                                    ?>
-
+                                    <a href="javascript:redirect('submission_edit.php?sid=<?php echo $value['submission_id'];?>')" class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Edit your submission"><i class="fa fa-wrench"></i></a>
+                                    <a href="javascript:delete_confirm('../controller/delete-submission.php?sid=<?php echo $value['submission_id']; ?>')" class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Delete submission"><i class="fa fa-trash"></i></a>
 
                                 </div>
                             </td>
@@ -196,7 +194,7 @@ $sprefix = $db->getSessionPrefix();
           </div>
         </div>
 
-        <div class="row" style="padding-top: 30px;">
+        <div class="row" style="padding-top: 30px;padding-bottom: 30px;">
           <div class="col-sm-12 text-center">
             The 11th Postgraduate Forum on Health Systems and Policy:
   Integrated Health System and Policy for Sustainable Development Goal
@@ -216,7 +214,7 @@ $sprefix = $db->getSessionPrefix();
 
     <!-- Page JS Plugins -->
     <script src="../assets/js/plugins/datatables/jquery.dataTables.min.js"></script>
-
+    <script src="../lib/sweetalert/dist/sweetalert.min.js"></script>
     <!-- Page JS Code -->
     <script src="../assets/js/pages/base_tables_datatables.js"></script>
   </body>

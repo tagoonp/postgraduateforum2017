@@ -49,3 +49,16 @@ function msg_confirm(msg, url){
 function redirect(url){
 	window.location = url;
 }
+
+function redirect_addsubmission(){
+	$stage = $.post('../controller/check-submission-number.php', function(){});
+	$stage.always(function(response){
+		console.log(response);
+		if(response=='N'){
+			window.location = 'submission.php';
+		}else{
+			swal("Sorry!", "You already have 2 submission! (Limit 2 submission)", "error");
+		}
+	});
+
+}

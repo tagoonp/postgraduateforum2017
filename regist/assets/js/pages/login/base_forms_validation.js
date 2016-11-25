@@ -23,8 +23,7 @@ var BaseFormValidation = function() {
             },
             rules: {
                 'username': {
-                    required: true,
-                    email: true
+                    required: true
                 },
                 'password': {
                     required: true
@@ -32,8 +31,7 @@ var BaseFormValidation = function() {
             },
             messages: {
                 'username': {
-                    required: 'Please enter e-mail address ...',
-                    email:  'Please enter a valid email address ...'
+                    required: 'Please enter username or e-mail address ...'
                 },
                 'password': {
                     required: 'Please enter password ...'

@@ -43,7 +43,7 @@ if(isset($_SESSION[$sprefix.'Username'])){
                 <?php
                 if($_SESSION[$sprefix.'Username']!=$value['au_email']){
                   ?>
-                  <button type="button" name="button" class="btn btn-xs btn-default"><i class="fa fa-wrench"></i></button>
+                  <button type="button" name="button" class="btn btn-xs btn-default" onclick="javascript:editAuthor_edit('<?php echo $value['auid'];?>')"><i class="fa fa-wrench"></i></button>
                   <button type="button" name="button" class="btn btn-xs btn-default" onclick="javascript:deleteAuthor('<?php echo $value['auid'];?>')"><i class="fa fa-trash"></i></button>
                   <?php
                 }

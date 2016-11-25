@@ -69,7 +69,7 @@ if($resultInsert1){
   if($resultInsert2){
     //error_reporting(E_STRICT);
     error_reporting(E_STRICT);
-    date_default_timezone_set('America/Toronto');
+    // date_default_timezone_set('America/Toronto');
     // Send an Email to registra
     require_once('../lib/phpmailer/class.phpmailer.php');
 
@@ -118,7 +118,7 @@ if($resultInsert1){
     $mail->MsgHTML($body);
 
     $address = $_POST["email"];
-    $mail->AddAddress($address, $_POST['prefix'].$_POST["fname"]."&nbsp;".$_POST["lname"]);
+    $mail->AddAddress($address, $_POST['prefix'].$_POST["fname"]." ".$_POST["lname"]);
 
     if(!$mail->Send()) {
       echo "Mailer Error: " . $mail->ErrorInfo;
