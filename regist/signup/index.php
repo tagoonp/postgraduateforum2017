@@ -121,7 +121,7 @@ $db->connect();
                                           <div class="card-block tab-content">
                                               <!-- Step 1 -->
                                               <div class="tab-pane m-t-md m-b-lg active" id="validation-classic-step1">
-                                                <h3 class="text-center" style="font-weight: 400; background: #32c294; padding: 10px; color: #fff;" >1.1 Read me befor registration and Submission</h3>
+                                                <h3 class="text-center" style="font-weight: 400; background: #32c294; padding: 10px; color: #fff;" >1.1 Read me before registration and Submission</h3>
                                                 <div class="form-group" style="">
                                                   <div class="col-md-12 text-center">
                                                     <label class="css-input css-checkbox css-checkbox-default" for="val-terms">Agreement <span class="text-red">*</span>
