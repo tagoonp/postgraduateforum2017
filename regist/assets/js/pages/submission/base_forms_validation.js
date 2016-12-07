@@ -33,6 +33,10 @@ var BaseFormValidation = function() {
                 },
                 'pname': {
                     required: true
+                },
+                'wcount': {
+                  required: true,
+                  range: [1, 250]
                 }
             },
             messages: {
@@ -47,6 +51,10 @@ var BaseFormValidation = function() {
                 },
                 'pname': {
                     required: 'Please center presenter name ...'
+                },
+                'wcount': {
+                  required: 'Please enter your abstract ...',
+                  range: 'Abstracts allowed maximum	250	words ...'
                 }
             }
         });

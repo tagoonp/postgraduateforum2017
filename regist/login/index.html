@@ -67,7 +67,7 @@
               <img src="../img/postgrad2017-logo.png" alt="The 11th Post Graduate Forum on Health System and Policy" style="width: 100%;">
             </div>
             <h3 class="text-center" style="font-weight: 400;">PostgraduateForum2017 Online Registration</h3>
-            <form class="js-validation-bootstrap form-horizontal" action="../controller/authen.php" method="post" style="padding-top: 30px;">
+            <form class="js-validation-bootstrap form-horizontal" action="../controller/authen.php" method="post" style="padding-top: 30px;" autocomplete="off">
               <div class="form-group">
                   <label class="col-md-4 control-label" for="val-username">Username or E-mail <span class="text-orange">*</span></label>
                   <div class="col-md-7">
@@ -81,19 +81,29 @@
                   </div>
               </div>
               <div class="form-group">
-                <div class="col-sm-12 text-center" style="padding-top: 10px;">
-                  <button class="btn btn-app">SIGN IN</button>
+                <div class="col-sm-3 text-left col-sm-offset-4" style="padding-top: 10px;">
+                  <button class="btn btn-app">Sign In</button>
+                </div>
+                <div class="col-sm-4">
+                  <div class="text-left" style="padding-top: 16px;">
+                    <a href="forgetpassword.php" class="text-blue">Forget password?</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="col-sm-7 text-left col-sm-offset-4" style="padding-top: 10px;">
+                  <div class="alert alert-info text-left">
+
+                                          <strong>New user!</strong> please <a class=" text-blue" href="../signup/">Sign Up</a>
+                                      </div>
                 </div>
               </div>
             </form>
           </div>
-
-          <div class="col-md-6 col-md-offset-3 col-sm-10 col-sm-offset-1 text-center" style="padding-top: 20px;">
-            <a href="forgotpassword/" class="text-black">Forget password?</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="signup/" class="text-blue">Sign Up</a>
-          </div>
         </div>
 
-        <div class="row" style="padding-top: 30px;">
+        <div class="row" style="padding-top: 0px;">
           <div class="col-sm-12 text-center">
             The 11th Postgraduate Forum on Health Systems and Policy:
   Integrated Health System and Policy for Sustainable Development Goal
@@ -113,7 +123,10 @@
 
     <script src="../assets/js/plugins/jquery-validation/jquery.validate.min.js"></script>
     <script src="../assets/js/pages/login/base_forms_validation.js"></script>
-
+    <script type="text/javascript">
+      var pages = 'login';
+    </script>
+    <script src="../assets/js/locate_access.js"></script>
   </body>
 
 </html>

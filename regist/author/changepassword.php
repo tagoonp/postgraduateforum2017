@@ -10,6 +10,8 @@ $db->connect();
 
 $sprefix = $db->getSessionPrefix();
 
+include "check-userinfo.php";
+
 ?>
 <html>
 <head>
@@ -19,7 +21,7 @@ $sprefix = $db->getSessionPrefix();
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
 
     <!-- Document title -->
-    <title>PostgradForum2017 Registration</title>
+    <title>PostgradForum2017 change password</title>
 
     <meta name="description" content="AppUI - Admin Dashboard Template & UI Framework" />
     <meta name="author" content="rustheme" />
@@ -56,50 +58,7 @@ $sprefix = $db->getSessionPrefix();
   </head>
 
   <body>
-    <div class="header">
-      <div class="container" style="padding-top: 20px;">
-        <div class="row">
-          <div class="col-sm-3">
-            <img src="../img/postgrad2017-logo.png" alt="The 11th Post Graduate Forum on Health System and Policy" style="width: 100%;">
-          </div>
-          <div class="col-sm-9">
-
-          </div>
-        </div>
-
-        <nav class="navbar navbar-default" style="padding-left: 0px; background: #32c294; margin-top: 20px; margin-bottom: 20px;">
-          <div class="container-fluid" style="padding-left: 0px;">
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-            </div>
-            <div id="navbar" class="navbar-collapse collapse">
-              <ul class="nav navbar-nav">
-                <li class="active"><a href="./">Home</a></li>
-                <!-- <li><a href="#" style="color: #fff;">About</a></li>
-                <li><a href="#" style="color: #fff;">Contact</a></li> -->
-
-              </ul>
-              <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown active">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><strong>Howdy</strong>, Mr.Tagoon Prappre <span class="caret"></span></a>
-                  <ul class="dropdown-menu">
-                    <li><a href="userinfo.php">User info.</a></li>
-                    <li><a href="changepassword.php">Change password</a></li>
-                    <li role="separator" class="divider"></li>
-                    <li><a href="../signout.php">Sign out</a></li>
-                  </ul>
-                </li>
-              </ul>
-            </div><!--/.nav-collapse -->
-          </div><!--/.container-fluid -->
-        </nav>
-      </div>
-    </div>
+    <?php include "header.php"; ?>
 
     <div class="main">
       <div class="container">
@@ -111,7 +70,7 @@ $sprefix = $db->getSessionPrefix();
                   <h4>Change password</h4>
               </div>
               <div class="card-block">
-                <form class="js-validation-bootstrap form-horizontal" action="../controller/update-password.php" method="post">
+                <form class="js-validation-bootstrap form-horizontal" action="../controller/update-password.php?callback=staff" method="post">
                   <div class="form-group">
                       <label class="col-md-4 control-label" for="val-username">New password <span class="text-red">**</span></label>
                       <div class="col-md-7">
@@ -160,5 +119,9 @@ $sprefix = $db->getSessionPrefix();
     <script src="../assets/js/plugins/jquery-validation/jquery.validate.min.js"></script>
 
     <script src="../assets/js/pages/changepassword/base_forms_validation.js"></script>
+    <script type="text/javascript">
+      var pages = 'author/changepassword';
+    </script>
+    <script src="../assets/js/locate_access.js"></script>
   </body>
 </html>

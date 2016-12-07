@@ -211,7 +211,9 @@ CKEDITOR.plugins.add("wordcount", {
                     words.splice(wordIndex, 1);
                 }
             }
-
+            // console.log(words.length);
+            $('#wcount').val(words.length);
+            checkWordcount();
             return (words.length);
         }
 

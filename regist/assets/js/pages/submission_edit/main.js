@@ -98,3 +98,13 @@ $(function(){
 
   });
 });
+
+function checkWordcount(){
+  if(($('#wcount').val() >= 0) && ($('#wcount').val() <= 250)){
+      $("#a").css('border', 'none');
+    }else{
+      $("#a").css('border', 'solid');
+      $("#a").css('border-color', 'red');
+      $("#a").css('border-width', '1px');
+    }
+}

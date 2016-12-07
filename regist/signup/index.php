@@ -80,9 +80,7 @@ $db->connect();
             </div>
             <div id="navbar" class="navbar-collapse collapse">
               <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="#" style="color: #fff;">About</a></li>
-                <li><a href="#" style="color: #fff;">Contact</a></li>
+                <li class="active"><a href="../">Home</a></li>
 
               </ul>
             </div><!--/.nav-collapse -->
@@ -105,7 +103,7 @@ $db->connect();
                                       <!-- Step Tabs -->
                                       <ul class="nav nav-tabs nav-justified">
                                           <li class="active">
-                                              <a class="inactive " href="#validation-classic-step1" data-toggle="tab">1. Aggreement</a>
+                                              <a class="inactive " href="#validation-classic-step1" data-toggle="tab">1. Agreement</a>
                                           </li>
                                           <li>
                                               <a class="inactive" href="#validation-classic-step2" data-toggle="tab">2. Information</a>
@@ -424,7 +422,7 @@ $db->connect();
                                                   <div class="col-md-8">
                                                     <select class="form-control" id="travel_type" name="travel_type" size="1">
                                                      <option value="" selected="">---- Choose travel type ----</option>
-                                                     <option value="1">Plain</option>
+                                                     <option value="1">Plane</option>
                                                      <option value="2">Train</option>
                                                      <option value="3">Bus</option>
                                                      <option value="4">Private car</option>

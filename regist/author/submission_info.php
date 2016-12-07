@@ -10,6 +10,8 @@ $db->connect();
 
 $sprefix = $db->getSessionPrefix();
 
+include "check-userinfo.php";
+
 if(!isset($_GET['sid'])){
   //Page not found
   header('Location: error-404.html');
@@ -78,39 +80,7 @@ $rowSubmission = $resultSubmission->fetch();
   </head>
 
   <body>
-    <div class="header">
-      <div class="container" style="padding-top: 20px;">
-        <div class="row">
-          <div class="col-sm-3">
-            <img src="../img/postgrad2017-logo.png" alt="The 11th Post Graduate Forum on Health System and Policy" style="width: 100%;">
-          </div>
-          <div class="col-sm-9">
-
-          </div>
-        </div>
-
-        <nav class="navbar navbar-default" style="padding-left: 0px; background: #32c294; margin-top: 20px; margin-bottom: 20px;">
-          <div class="container-fluid" style="padding-left: 0px;">
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-            </div>
-            <div id="navbar" class="navbar-collapse collapse">
-              <ul class="nav navbar-nav">
-                <li class="active"><a href="./">Home</a></li>
-                <!-- <li><a href="#" style="color: #fff;">About</a></li>
-                <li><a href="#" style="color: #fff;">Contact</a></li> -->
-
-              </ul>
-            </div><!--/.nav-collapse -->
-          </div><!--/.container-fluid -->
-        </nav>
-      </div>
-    </div>
+    <?php include "header.php"; ?>
 
     <div class="main">
       <div class="container">
@@ -200,5 +170,9 @@ $rowSubmission = $resultSubmission->fetch();
     <script src="../lib/sweetalert/dist/sweetalert.min.js"></script>
     <!-- Page JS Code -->
     <script src="../assets/js/pages/base_tables_datatables.js"></script>
+    <script type="text/javascript">
+      var pages = 'author/view_submission';
+    </script>
+    <script src="../assets/js/locate_access.js"></script>
   </body>
 </html>

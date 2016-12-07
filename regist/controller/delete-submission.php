@@ -13,13 +13,17 @@ if(isset($_SESSION[$sprefix.'Username'])){
 
   if(isset($_GET['sid'])){
 
-    $strSQL = "DELETE FROM t5iw_submission WHERE submission_id = ? AND username = ?";
-    $arr = array($_GET['sid'], $_SESSION[$sprefix.'Username']);
-    $resultDelete = $db->delete($strSQL, $arr);
+    // $strSQL = "DELETE FROM t5iw_submission WHERE submission_id = ? AND username = ?";
+    // $arr = array($_GET['sid'], $_SESSION[$sprefix.'Username']);
+    // $resultDelete = $db->delete($strSQL, $arr);
 
-    $strSQL = "DELETE FROM t5iw_author WHERE au_submission_id = ? ";
-    $arr = array($_GET['sid']);
-    $resultDelete = $db->delete($strSQL, $arr);
+    $strSQL = "UPDATE t5iw_submission SET delete_status = ? WHERE submission_id = ? AND username = ?";
+    $arr = array('Y', $_GET['sid'], $_SESSION[$sprefix.'Username']);
+    $resultUpdate = $db->update($strSQL, $arr);
+
+    // $strSQL = "DELETE FROM t5iw_author WHERE au_submission_id = ? ";
+    // $arr = array($_GET['sid']);
+    // $resultDelete = $db->delete($strSQL, $arr);
 
     $db->disconnect();
     header('Location: ../author/');

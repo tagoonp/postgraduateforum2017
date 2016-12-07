@@ -31,7 +31,7 @@ function deleteAuthor(auid){
 }
 
 $(function(){
-
+  console.log('asd');
   $('.js-validation-bootstrap-mini1').submit(function(){
     if(($('#prefix').val()!='') && ($('#val-fname').val()!='') && ($('#val-lname').val()!='') && ($('#val-email').val()!='') && ($('#val-suggestions').val()!='')){
       $stage = $.post('../controller/add-author.php', {
@@ -68,6 +68,18 @@ $(function(){
     }
   });
 
+  // $('#wcount')(function(){
+  //   console.log('asd');
+  //   if(($('#wcount').val() >= 0) && ($('#wcount').val() <= 250)){
+  //     alert('a');
+  //     $("#a").css('border', 'none');
+  //   }else{
+  //     $("#a").css('border', 'solid');
+  //     $("#a").css('border-color', 'red');
+  //     $("#a").css('border-width', '1px');
+  //   }
+  // });
+
   $('#btnAddAuthor').click(function(){
     $('#prefix').val('');
     $('#val-fname').val('');
@@ -87,3 +99,13 @@ $(function(){
 
   });
 });
+
+function checkWordcount(){
+  if(($('#wcount').val() >= 0) && ($('#wcount').val() <= 250)){
+      $("#a").css('border', 'none');
+    }else{
+      $("#a").css('border', 'solid');
+      $("#a").css('border-color', 'red');
+      $("#a").css('border-width', '1px');
+    }
+}

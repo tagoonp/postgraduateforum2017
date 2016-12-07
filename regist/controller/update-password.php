@@ -24,7 +24,7 @@ if(isset($_SESSION[$sprefix.'Username'])){
     $resultUpdate = $db->update($strSQL, array($hashPWD, $_SESSION[$sprefix.'Username']));
 
     require_once('../lib/phpmailer/class.phpmailer.php');
-    $body = "Dear ".$resultinfo['prefix'].$resultinfo["fname"]."&nbsp;".$resultinfo["lname"]."
+    $body = "Dear ".$resultinfo['prefix_id'].$resultinfo["fname"]."&nbsp;".$resultinfo["lname"]."
     <p>
     The 11th Postgraduate Forum on Health Systems and Policy: Integrated Health System and Policy for Sustainable Development Goal
     </p>
@@ -60,7 +60,7 @@ if(isset($_SESSION[$sprefix.'Username'])){
     $mail->MsgHTML($body);
 
     $address = $resultinfo["email"];
-    $mail->AddAddress($address, $resultinfo['prefix'].$resultinfo["fname"]." ".$resultinfo["lname"]);
+    $mail->AddAddress($address, $resultinfo['prefix_id'].$resultinfo["fname"]." ".$resultinfo["lname"]);
 
     if(!$mail->Send()) {
       echo "Mailer Error: " . $mail->ErrorInfo;
@@ -72,7 +72,7 @@ if(isset($_SESSION[$sprefix.'Username'])){
     ?>
     <script type="text/javascript">
       alert('Update password success!');
-      window.location = '../author/';
+      window.location = '../'.$_GET['callback'].'/';
     </script>
     <?php
     die();
@@ -82,7 +82,7 @@ if(isset($_SESSION[$sprefix.'Username'])){
     ?>
     <script type="text/javascript">
       alert('Session timeout!');
-      window.location = '../../registration/submission/';
+      window.location = '../';
     </script>
     <?php
     die();
@@ -92,7 +92,7 @@ if(isset($_SESSION[$sprefix.'Username'])){
   ?>
   <script type="text/javascript">
     alert('Session timeout!');
-    window.location = '../../registration/submission/';
+    window.location = '../';
   </script>
   <?php
   die();

@@ -9,12 +9,7 @@ $db->connect();
 
 $sprefix = $db->getSessionPrefix();
 
-$strSQL = "SELECT * FROM t5iw_useraccount a INNER JOIN t5iw_userinformation b on a.username = b.username WHERE a.username = ?";
-$resultSelect = $db->select($strSQL, array($_SESSION[$sprefix.'Username']));
-
-if($resultSelect){
-  $rowinfo = $resultSelect->fetch();
-}
+include "check-userinfo.php";
 
 if(!isset($_GET['sid'])){
   //Page not found
@@ -46,7 +41,7 @@ $rowSubmission = $resultSubmission->fetch();
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
 
     <!-- Document title -->
-    <title>PostgradForum2017 Registration</title>
+    <title>PostgradForum2017 Submission System</title>
 
     <meta name="description" content="AppUI - Admin Dashboard Template & UI Framework" />
     <meta name="author" content="rustheme" />
@@ -86,39 +81,7 @@ $rowSubmission = $resultSubmission->fetch();
   </head>
 
   <body>
-    <div class="header">
-      <div class="container" style="padding-top: 20px;">
-        <div class="row">
-          <div class="col-sm-3">
-            <img src="../img/postgrad2017-logo.png" alt="The 11th Post Graduate Forum on Health System and Policy" style="width: 100%;">
-          </div>
-          <div class="col-sm-9">
-
-          </div>
-        </div>
-
-        <nav class="navbar navbar-default" style="padding-left: 0px; background: #32c294; margin-top: 20px; margin-bottom: 20px;">
-          <div class="container-fluid" style="padding-left: 0px;">
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-            </div>
-            <div id="navbar" class="navbar-collapse collapse">
-              <ul class="nav navbar-nav">
-                <li class="active"><a href="./">Home</a></li>
-                <!-- <li><a href="#" style="color: #fff;">About</a></li>
-                <li><a href="#" style="color: #fff;">Contact</a></li> -->
-
-              </ul>
-            </div><!--/.nav-collapse -->
-          </div><!--/.container-fluid -->
-        </nav>
-      </div>
-    </div>
+    <?php include "header.php"; ?>
 
     <div class="main">
       <div class="container">
@@ -411,36 +374,40 @@ should	be	underlined.</li>
     <script src="../assets/js/pages/submission/base_forms_validation.js"></script>
     <script src="../assets/js/pages/submission_edit/main.js"></script>
     <script type="text/javascript">
+      var pages = 'author/update_submission';
+    </script>
+    <script src="../assets/js/locate_access.js"></script>
+    <script type="text/javascript">
 
       createSessionAuthor();
 
       CKEDITOR.replace( 'txt-abstract', {
         wordcount : {
 					showCharCount : false,
-					showWordCount : true,
+					showWordCount : true
 
 					// Maximum allowed Word Count
-					maxWordCount: 250,
+					// maxWordCount: 250,
 
 					// Maximum allowed Char Count
 					// maxCharCount: 50000
 				},
 
         on: {
-			        instanceReady: function(e) {
-                this.document.on("keyup", function(evt){
-                    var editorContent = $(e.editor.getData());
-                    if(editorContent.text()==''){
-                      var res = editorContent.text().split(" ");
-                      $('#wcount').val('0');
-                    }else{
-                      $("#a").css('border', 'none');
-                      var res = editorContent.text().split(" ");
-                      $('#wcount').val(res.length);
-                    }
-
-                });
-			        }
+			        // instanceReady: function(e) {
+              //   this.document.on("keyup", function(evt){
+              //       var editorContent = $(e.editor.getData());
+              //       if(editorContent.text()==''){
+              //         var res = editorContent.text().split(" ");
+              //         $('#wcount').val('0');
+              //       }else{
+              //         $("#a").css('border', 'none');
+              //         var res = editorContent.text().split(" ");
+              //         $('#wcount').val(res.length);
+              //       }
+              //
+              //   });
+			        // }
         }
 
       } );

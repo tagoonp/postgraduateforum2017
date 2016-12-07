@@ -7,8 +7,8 @@ include "../../xplor-connect.php";
 $db = new database();
 $db->connect();
 
-$strSQL = "SELECT * FROM t5iw_useraccount WHERE email = ? AND activate_status = ?";
-$result = $db->select($strSQL, array($_POST['email'], 'Y'));
+$strSQL = "SELECT * FROM t5iw_useraccount WHERE (email = ? OR username = ?) AND activate_status = ?";
+$result = $db->select($strSQL, array($_POST['email'], $_POST['email'] , 'Y'));
 
 // echo $sprefix."asd";
 // die();
@@ -17,7 +17,7 @@ if($result){
   ?>
   <script type="text/javascript">
     alert('Duplicate e-mail address, Erro-code: 1-1x01');
-    window.location = '../';
+    window.history.back();
   </script>
   <?php
   $db->disconnect();
@@ -80,8 +80,8 @@ if($resultInsert1){
 
             <p>
             Firstly, please do the following:<br>
-            1. Click this link for activate your account >> <a href='http://postgraduateforum2017.com/registration/activate.php?sid=".$sid."'>http://postgraduateforum2017.com/registration/activate</a><br>
-            2. Goto <a href='http://postgraduateforum2017.com/regist/login'>http://postgraduateforum2017.com/regist/login</a> and Log in using your account information: <br><br>
+            1. Click this link for activate your account >> <a href='http://postgraduateforum2017.wisnior.com/registration/activate.php?sid=".$sid."'>http://postgraduateforum2017.wisnior.com/registration/activate</a><br>
+            2. Goto <a href='http://postgraduateforum2017.wisnior.com/regist/login'>http://postgraduateforum2017.wisnior.com/regist/login</a> and Log in using your account information: <br><br>
             Username: ".$_POST["email"]."<br>
             Password: ".$pwd."
             </p>
@@ -136,8 +136,12 @@ if($resultInsert1){
       die();
 
     }else{
+
+      $strSQL = "UPDATE t5iw_useraccount SET account_type = ? WHERE username = ? AND email = ?";
+      $resyltUpdate = $db->update($strSQL, array('4', $_POST['email'], $_POST['email']));
+
       $db->disconnect();
-      header('Location: ../signup/complete.php');
+      header('Location: ../signup/success.php');
       die();
     }
 
@@ -160,7 +164,7 @@ if($resultInsert1){
   ?>
   <script type="text/javascript">
     alert('This e-mail address already available!');
-    window.location = '../';
+    window.history.back();
   </script>
   <?php
   $db->disconnect();

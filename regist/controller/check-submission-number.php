@@ -9,8 +9,8 @@ $db->connect();
 $sprefix = $db->getSessionPrefix();
 
 if(isset($_SESSION[$sprefix.'Username'])){
-  $strSQL = "SELECT COUNT(*) numrow FROM t5iw_submission WHERE username = ?";
-  $resultCheck = $db->select($strSQL, array( $_SESSION[$sprefix.'Username'] ));
+  $strSQL = "SELECT COUNT(*) numrow FROM t5iw_submission WHERE username = ? AND delete_status = ?";
+  $resultCheck = $db->select($strSQL, array( $_SESSION[$sprefix.'Username'], 'N'));
   if($resultCheck){
     $rowCheck = $resultCheck->fetch();
     if($rowCheck['numrow']>=2){

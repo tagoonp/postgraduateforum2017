@@ -10,6 +10,8 @@ $db->connect();
 
 $sprefix = $db->getSessionPrefix();
 
+include "check-userinfo.php";
+
 ?>
 <html>
 <head>
@@ -19,7 +21,7 @@ $sprefix = $db->getSessionPrefix();
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
 
     <!-- Document title -->
-    <title>PostgradForum2017 Registration</title>
+    <title>PostgradForum2017 submision</title>
 
     <meta name="description" content="AppUI - Admin Dashboard Template & UI Framework" />
     <meta name="author" content="rustheme" />
@@ -57,136 +59,187 @@ $sprefix = $db->getSessionPrefix();
   </head>
 
   <body>
-    <div class="header">
-      <div class="container" style="padding-top: 20px;">
-        <div class="row">
-          <div class="col-sm-3">
-            <img src="../img/postgrad2017-logo.png" alt="The 11th Post Graduate Forum on Health System and Policy" style="width: 100%;">
-          </div>
-          <div class="col-sm-9">
 
-          </div>
-        </div>
-
-        <nav class="navbar navbar-default" style="padding-left: 0px; background: #32c294; margin-top: 20px; margin-bottom: 20px;">
-          <div class="container-fluid" style="padding-left: 0px;">
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-            </div>
-            <div id="navbar" class="navbar-collapse collapse">
-              <ul class="nav navbar-nav">
-                <li class="active"><a href="./">Home</a></li>
-                <!-- <li><a href="#" style="color: #fff;">About</a></li>
-                <li><a href="#" style="color: #fff;">Contact</a></li> -->
-
-              </ul>
-              <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown active">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><strong>Howdy</strong>, Mr.Tagoon Prappre <span class="caret"></span></a>
-                  <ul class="dropdown-menu">
-                    <li><a href="userinfo.php">User info.</a></li>
-                    <li><a href="changepassword.php">Change password</a></li>
-                    <li role="separator" class="divider"></li>
-                    <li><a href="../signout.php">Sign out</a></li>
-                  </ul>
-                </li>
-              </ul>
-            </div><!--/.nav-collapse -->
-          </div><!--/.container-fluid -->
-        </nav>
-      </div>
-    </div>
+    <?php include "header.php"; ?>
 
     <div class="main">
       <div class="container">
         <!-- <hr class="style4"> -->
-        <div class="row">
+        <!-- <div class="row">
           <div class="col-sm-12">
             <button type="button" name="button" class="btn btn-app-red" onclick="javascript:redirect_addsubmission()"><i class="fa fa-plus"></i> Add new submission</button>
           </div>
-        </div>
-        <div class="row" style="padding-top: 20px;">
+        </div> -->
+        <div class="row" style="padding-top: 0px;">
           <div class="col-sm-12">
 
             <div class="card">
               <div class="card-header bg-success">
-                  <h4>Your submitted abstract</h4>
+                  <h4>Summary information</h4>
               </div>
               <div class="card-block">
-                <table class="table table-bordered table-striped table-vcenter js-dataTable-full">
-                  <thead>
-                      <tr>
-                          <th class="text-center"></th>
-                          <th class="w-20">
-                            ID
-                          </th>
-                          <th>Title</th>
-                          <th class="hidden-xs">Status</th>
-                          <th class="hidden-xs w-20">Created</th>
-                          <th class="" style="width: 20%;">Actions</th>
-                      </tr>
-                  </thead>
+                <table class="table table-striped table-condensed">
                   <tbody>
-                    <?php
-                    $strSQL = "SELECT * FROM t5iw_submission a  WHERE a.username = ? AND a.delete_status = ? ";
-                    $resultSubmission = $db->select($strSQL, array($_SESSION[$sprefix.'Username'], 'N'));
-
-                    if($resultSubmission){
-                      $c = 1;
-                      foreach ($resultSubmission as $value) {
-                        ?>
-                        <tr>
-                            <td class="text-center" style="vertical-align: top;"><?php echo $c; ?></td>
-                            <td style="vertical-align: top;"><?php echo $value['id'];?></td>
-                            <td class="font-500" style="vertical-align: top;"><a href="submission_info.php?sid=<?php echo $value['submission_id'];?>"><?php echo $value['title'];?></a></td>
-                            <td class="hidden-xs" style="vertical-align: top;">
-                              <?php
-                              switch ($value['stage']) {
-                                case '1':
-                                  echo "Created";
-                                  break;
-                                case '2':
-                                  echo "Assign reviewer";
-                                  break;
-                                case '3':
-                                  echo "Reply with comment";
-                                  break;
-                                case '4':
-                                  echo "Finallize before acception";
-                                  break;
-                                case '5':
-                                  echo "Accept";
-                                  break;
-                                default:
-                                  echo "N/A";
-                                  break;
-                              }
-                              ?>
-                            </td>
-                            <td class="hidden-xs" style="vertical-align: top;">
-                              <?php echo dateConvert_1($value['submit_date_time']); ?>
-                            </td>
-                            <td class="text-center" style="vertical-align: top;">
-                                <div class="btn-group">
-                                    <a href="submission_info.php?sid=<?php echo $value['submission_id'];?>" class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="View submission"><i class="fa fa-search"></i></a>
-                                    <a href="javascript:redirect('submission_edit.php?sid=<?php echo $value['submission_id'];?>')" class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Edit your submission"><i class="fa fa-wrench"></i></a>
-                                    <a href="javascript:delete_confirm('../controller/delete-submission.php?sid=<?php echo $value['submission_id']; ?>')" class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Delete submission"><i class="fa fa-trash"></i></a>
-
-                                </div>
-                            </td>
-                        </tr>
-                        <?php
-                        $c++;
-                      }
-                    }
-
-                    ?>
+                    <tr style="background: #32c294;">
+                      <td style="font-size: 1.3em; color: #fff;" class="font-500" colspan="2">General information</td>
+                    </tr>
                   </tbody>
+                  <tbody>
+                    <tr>
+                      <td class="col-sm-3">Full name</td>
+                      <td class="font-300"><?php echo $rowinfo['prefix_id'].$rowinfo['fname']." ".$rowinfo['lname']; ?></td>
+                    </tr>
+                    <tr>
+                      <td>Participation type </td>
+                      <td class="font-300">
+                        <?php
+                        switch($rowinfo['par_type']){
+                          case '1': echo "Presenter"; break;
+                          case '2': echo "Non-presenter"; break;
+                          default: echo "N/A";
+                        }
+                         ?>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Registration type</td>
+                      <td class="font-300">
+                        <?php
+                        switch($rowinfo['reg_type']){
+                          case '1': echo "Thai"; break;
+                          case '2': echo "Non-Thai"; break;
+                          default: echo "N/A";
+                        }
+                         ?>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>University/Institute</td>
+                      <td class="font-300"><?php echo $rowinfo['university']; ?></td>
+                    </tr>
+                    <tr>
+                      <td>Status</td>
+                      <td class="font-300">
+                        <?php
+                        if($rowinfo['status']!='99'){
+                          switch($rowinfo['status']){
+                            case '1': echo "Undergraduate student"; break;
+                            case '2': echo "Graduate student"; break;
+                            case '3': echo "Teacher"; break;
+                            case '4': echo "Researcher"; break;
+                            default: echo "N/A";
+                          }
+                        }else{
+                          echo $rowinfo['status_other'];
+                        }
+
+                         ?>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Address</td>
+                      <td class="font-300"><?php echo $rowinfo['address']; ?></td>
+                    </tr>
+                    <tr>
+                      <td>Country</td>
+                      <td class="font-300"><?php echo $rowinfo['country_name']; ?></td>
+                    </tr>
+                    <tr>
+                      <td>Phone number</td>
+                      <td class="font-300"><?php echo $rowinfo['tel']; ?></td>
+                    </tr>
+                    <tr>
+                      <td>E-mail address</td>
+                      <td class="font-300"><?php echo $rowinfo['email'] ?></td>
+                    </tr>
+                    <tr>
+                      <td>Meal request</td>
+                      <td class="font-300">
+                        <?php if($rowinfo['halal']=='Y'){ echo "<span class=''>- Halal</span><br>";} ?>
+                        <?php if($rowinfo['vegie']=='Y'){ echo "<span class=''>- Vegetarian</span><br>";} ?>
+                        <?php if($rowinfo['nobeef']=='Y'){ echo "<span class=''>- No beef</span><br>";} ?>
+                        <?php if($rowinfo['noseafood']=='Y'){ echo "<span class=''>- No Seafood</span><br>";} ?>
+                        <?php if(($rowinfo['halal']=='N') && ($rowinfo['vegie']=='N') && ($rowinfo['nobeef']=='N') && ($rowinfo['noseafood']=='N')){ echo "No request"; } ?>
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody>
+                    <tr style="background: #32c294;">
+                      <td style="font-size: 1.3em; color: #fff;" class="font-500" colspan="2">Accommodation information</td>
+                    </tr>
+                  </tbody>
+                  <tbody>
+                    <tr>
+                      <td>Accommodation's name </td>
+                      <td class="font-300">
+                        <?php
+                        if($rowinfo['accommodation']!='99'){
+                          switch($rowinfo['accommodation']){
+                            case '1': echo "Buri Sriphu boutique Hotel"; break;
+                            case '2': echo "Crystal Hotel"; break;
+                            default: echo "N/A";
+                          }
+                        }else{
+                          echo $rowinfo['accommodation_other'];
+                        }
+                        ?>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Arrival </td>
+                      <td class="font-300"><?php echo dateConvert_2($rowinfo['arr_date'])." ".$rowinfo['arr_time']; ?></td>
+                    </tr>
+                    <tr>
+                      <td>Department </td>
+                      <td class="font-300"><?php echo dateConvert_2($rowinfo['dept_date'])." ".$rowinfo['dept_time']; ?></td>
+                    </tr>
+                    <tr>
+                      <td>Travel</td>
+                      <td class="font-300">
+                        <?php
+                        if($rowinfo['travel']!='99'){
+                          switch($rowinfo['travel']){
+                            case '1': echo "Plane"; break;
+                            case '2': echo "Train"; break;
+                            case '3': echo "Bus"; break;
+                            case '4': echo "Private car"; break;
+                            default: echo "N/A";
+                          }
+                        }else{
+                          echo $rowinfo['accommodation_other'];
+                        }
+                        ?>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Hotel reseration receipt </td>
+                      <td class="font-300">
+                        <span class="text-red">Not upload yet. **</span>
+                        <div class="" style="padding-top: 10px; padding-bottom: 20px;">
+                          <button type="button" name="button" class="btn btn-app-blue" data-toggle="tooltip" data-placement="top" title="Upload recipe" onclick="javascript: window.location = 'upload-h-receipt.php'" ><i class="fa fa-upload"></i> Upload</button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+
+                  <tbody>
+                    <tr style="background: #32c294;">
+                      <td style="font-size: 1.3em; color: #fff;" class="font-500" colspan="2">Registration fee</td>
+                    </tr>
+                  </tbody>
+                  <tbody>
+                    <tr>
+                      <td>Transfer receipt </td>
+                      <td class="font-300">
+                        <span class="text-red">Not upload yet. **</span>
+                        <div class="" style="padding-top: 10px; padding-bottom: 20px;">
+                          <button type="button" name="button" class="btn btn-app-blue" data-toggle="tooltip" data-placement="top" title="Upload recipe" onclick="javascript: window.location = 'upload-r-receipt.php'" ><i class="fa fa-upload"></i> Upload</button>
+                        </div>
+                      </td>
+                    </tr>
+
+                  </tbody>
+
                 </table>
               </div>
             </div>
@@ -217,5 +270,9 @@ $sprefix = $db->getSessionPrefix();
     <script src="../lib/sweetalert/dist/sweetalert.min.js"></script>
     <!-- Page JS Code -->
     <script src="../assets/js/pages/base_tables_datatables.js"></script>
+    <script type="text/javascript">
+      var pages = 'author/index';
+    </script>
+    <script src="../assets/js/locate_access.js"></script>
   </body>
 </html>

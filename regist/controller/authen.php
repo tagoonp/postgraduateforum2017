@@ -39,7 +39,7 @@ if($resultSelect){
             ; break;
   }
 }else{
-  header('Location: ../login.php?austat=2');
+  header('Location: ../login/fail.php?p=2');
   break;
 }
 ?>
