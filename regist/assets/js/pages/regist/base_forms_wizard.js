@@ -83,6 +83,9 @@ var BaseFormWizard = function() {
 				'reg_type': {
 						required: true
 				},
+				'gender': {
+						required: true
+				},
 				'prefix': {
 						required: true
 				},
@@ -90,6 +93,9 @@ var BaseFormWizard = function() {
 						required: true
 				},
 				'lname': {
+						required: true
+				},
+				'pid': {
 						required: true
 				},
 				'university': {
@@ -151,6 +157,9 @@ var BaseFormWizard = function() {
 				'reg_type': {
 						required: 'Please choose registration type...'
 				},
+				'gender': {
+						required: 'Please choose your gender...'
+				},
 				'prefix': {
 						required: 'Please choose your prefix...'
 				},
@@ -159,6 +168,9 @@ var BaseFormWizard = function() {
 				},
 				'lname': {
 						required: 'Please enter your surname...'
+				},
+				'pid': {
+						required: 'Please enter your Identification Number (for Thai) / Passport ID (for Non-Thai)...'
 				},
 				'university': {
 						required: "Please enter usiversity or insitute..."

@@ -34,8 +34,7 @@ $db->connect();
     <link rel="stylesheet" href="../assets/js/plugins/bootstrap-datepicker/bootstrap-datepicker3.min.css" />
     <link rel="stylesheet" href="../assets/js/plugins/select2/select2.min.css" />
     <link rel="stylesheet" href="../assets/js/plugins/select2/select2-bootstrap.css" />
-    <link rel="stylesheet" href="../assets/js/plugins/jquery-tags-input/jquery.tagsinput.min.css" />
-
+    <link rel="stylesheet" href="assets/js/plugins/dropzonejs/dropzone.min.css" />
     <!-- AppUI CSS stylesheets -->
     <link rel="stylesheet" id="css-font-awesome" href="../assets/css/font-awesome.css" />
     <link rel="stylesheet" id="css-ionicons" href="../assets/css/ionicons.css" />
@@ -122,7 +121,21 @@ $db->connect();
                                                 <h3 class="text-center" style="font-weight: 400; background: #32c294; padding: 10px; color: #fff;" >1.1 Read me before registration and Submission</h3>
                                                 <div class="form-group" style="">
                                                   <div class="col-md-12 text-center">
-                                                    <label class="css-input css-checkbox css-checkbox-default" for="val-terms">Agreement <span class="text-red">*</span>
+                                                    <div class="row">
+                                                      <div class="col-sm-10 col-sm-offset-1 text-left">
+                                                        <div class="" style="padding: 10px 20px; background: rgb(246, 246, 246); margin: 20px;">
+                                                          ​<p>
+                                                            1.      Please kindly fill in your information<br>
+                                                            2.      <span style="color: red;">(**) required.</span><br>
+                                                            3.      After registering with the Website you are required to submit your email address. The system will notify the applicant when the application form is completed.<br>
+                                                            4.      After confirming registration, you can add or edit your information any time.<br>
+                                                            5.      For your privacy please create a new password.<br>
+                                                            6.      Two abstracts maximum per participant.​<br>
+                                                          </p>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                    <label class="css-input css-checkbox css-checkbox-default" for="val-terms">Agreement <span class="text-red">**</span>
                                                       <input type="checkbox" id="val-terms" name="val-terms" value="1" /><span></span> I agree to the agreement
                                                     </label>
                                                   </div>
@@ -132,6 +145,11 @@ $db->connect();
 
                                               <!-- Step 2 -->
                                               <div class="tab-pane m-t-md m-b-lg" id="validation-classic-step2">
+
+                                                <div class="alert alert-danger alert-dismissable"  style="background: rgb(255, 235, 235); ">
+                                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                                    <p><strong>Note!</strong> Please enter all required (**) field. </p>
+                                                </div>
 
                                                 <h3 style="font-weight: 400; background: #32c294; padding: 10px; color: #fff;" >2.1 General information</h3>
                                                 <div class="form-group" style="padding-top: 30px;">
@@ -163,6 +181,17 @@ $db->connect();
                                                 </div>
 
                                                 <div class="form-group">
+                                                  <label class="col-md-3 control-label" for="example-select2">Gender <span class="text-red">**</span></label>
+                                                  <div class="col-md-8">
+                                                    <select class="form-control" id="gender" name="gender" size="1">
+                                                     <option value="" selected="">---- Choose gender ----</option>
+                                                     <option value="Male">Male</option>
+                                                     <option value="Female">Female</option>
+                                                   </select>
+                                                  </div>
+                                                </div>
+
+                                                <div class="form-group">
                                                   <label class="col-md-3 control-label" for="example-select2">Prefix <span class="text-red">**</span></label>
                                                   <div class="col-md-8">
                                                     <select class="form-control" id="prefix" name="prefix" size="1">
@@ -189,6 +218,13 @@ $db->connect();
                                                   <label class="col-md-3 control-label" for="val-username">Last name <span class="text-red">**</span></label>
                                                   <div class="col-md-8">
                                                       <input class="form-control" type="text" id="lname" name="lname" placeholder="Enter last name..." />
+                                                  </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                  <label class="col-md-3 control-label" for="val-username">Identification Number (Thai) / Passport ID (Non-Thai) <span class="text-red">**</span></label>
+                                                  <div class="col-md-8">
+                                                      <input class="form-control" type="text" id="pid" name="pid" placeholder="Enter you ID / Passport ID..." />
                                                   </div>
                                                 </div>
 
@@ -440,6 +476,38 @@ $db->connect();
                                                   </div>
                                                 </div>
 
+                                                <h3 style="font-weight: 400; background: #32c294; padding: 10px; color: #fff;" >2.3 Payment information</h3>
+
+                                                <div class="form-group">
+                                                  <label class="col-md-3 control-label" for="example-select2">Status </label>
+                                                  <div class="col-xs-8">
+                                                    <label class="css-input css-radio css-radio-lg css-radio-primary m-r-sm">
+                                      								<input type="radio" name="radio-group12" checked /><span></span> Unpaid
+                                      							</label><br>
+                                                    <label class="css-input css-radio css-radio-lg css-radio-primary">
+                                      								<input type="radio" name="radio-group12" /><span></span> Paid
+                                      							</label>
+                                                  </div>
+                                                  <div class="col-xs-8 col-xs-offset-3">
+                                                    <p style="font-size: 0.8em;">
+                                                      <strong>Note!</strong> You can update your payment later.
+                                                    </p>
+                                                  </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                  <label class="col-md-3 control-label" for="example-select2">Upload payment receipt </label>
+                                                  <div class="col-xs-8">
+                                                    <button type="button" name="button" class="btn btn-app-blue" data-toggle="modal" data-target="#modal-normal"><i class="fa fa-upload"></i> Click for upload</button>
+                                                  </div>
+                                                  <div class="col-xs-8 col-xs-offset-3">
+                                                    <p style="font-size: 0.8em;">
+                                                      <strong>Note!</strong> Scan file or photo.
+                                                    </p>
+                                                  </div>
+                                                </div>
+
+
                                               </div>
                                               <!-- End Step 2 -->
                                           </div>
@@ -467,10 +535,6 @@ $db->connect();
                               <!-- .col-lg-6 -->
 
           </div>
-
-          <div class="col-md-6 col-md-offset-3 col-sm-10 col-sm-offset-1 text-center" style="padding-top: 20px;">
-            <a href="forgotpassword/" class="text-black">Forget password?</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="signup/" class="text-blue">Sign Up</a>
-          </div>
         </div>
 
         <div class="row" style="padding-top: 30px;">
@@ -481,6 +545,30 @@ $db->connect();
         </div>
       </div>
     </div>
+
+    <div class="app-ui-mask-modal"></div>
+
+    <div class="modal" id="modal-normal" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="card-header bg-green bg-inverse">
+                                    <h4>Terms &amp; Conditions</h4>
+                                    <ul class="card-actions">
+                                        <li>
+                                            <button data-dismiss="modal" type="button"><i class="ion-close"></i></button>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="card-block">
+                                    <form class="dropzone"  action="base_forms_pickers_select.html"></form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-sm btn-default" type="button" data-dismiss="modal">Close</button>
+                                    <button class="btn btn-sm btn-app" type="button" data-dismiss="modal"><i class="ion-checkmark"></i> Ok</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
     <!-- AppUI Core JS: jQuery, Bootstrap, slimScroll, scrollLock and App.js -->
     <script src="../assets/js/core/jquery.min.js"></script>
@@ -496,7 +584,7 @@ $db->connect();
     <script src="../assets/js/plugins/select2/select2.full.min.js"></script>
     <script src="../assets/js/plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
     <script src="../assets/js/plugins/jquery-validation/jquery.validate.min.js"></script>
-
+    <script src="../assets/js/plugins/dropzonejs/dropzone.min.js"></script>
     <!-- Page JS Code -->
     <script src="../assets/js/pages/regist/base_forms_wizard.js"></script>
     <script src="../assets/js/pages/regist/main.js"></script>
